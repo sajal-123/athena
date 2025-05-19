@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model GithubUser {
+  id                Int       @id @default(autoincrement())
+  username          String    @unique
+  profileUrl        String
+  bio               String
+  location          String
+  readme            String
+  contributionCount String
+  repos             Repo[]
+}
+
+model Repo {
+  id         Int    @id @default(autoincrement())
+  name       String
+  desc       String
+  language   String
+  githubUser GithubUser @relation(fields: [githubUserId], references: [id])
+  githubUserId Int
+}
+
+
+
